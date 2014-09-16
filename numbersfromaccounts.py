@@ -8,9 +8,25 @@ db = pymongo.MongoClient().Twitter
 db_parsed = pymongo.MongoClient().TwitterParsed
 
 tweets = db.tweets.find().limit(200)
-accounts = []
+accounts_ids = {}
 
 for tweet in tweets:
+    name = tweet['user']['screen_name']
+    tweet_ids = []
+    if name not in accounts_ids:
+        tweet_ids.append(tweet['_id'])
+        accounts_ids = {name:tweet_ids}
+    else:
+        tweet_ids = accounts_ids.get(name)
+        tweet_ids.append(tweet['_id'])
+        del accounts_ids[name]
+        accounts_ids = {name:tweet_ids}
+
+print accounts_ids
+#for item in accounts_ids:
+
+
+'''for tweet in tweets:
     accounts.append(tweet['user']['screen_name'])
     #print tweet['user']['screen_name']
 
@@ -34,6 +50,6 @@ try:
         print name+"\t\t"+str(list(Set(numbers)))
 
 except:
-    print sys.exc_info()
+    print sys.exc_info()'''
 
 
