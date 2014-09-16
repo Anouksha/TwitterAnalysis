@@ -7,7 +7,7 @@ import sys
 db = pymongo.MongoClient().Twitter
 db_parsed = pymongo.MongoClient().TwitterParsed
 
-tweets = db.tweets.find()
+tweets = db.tweets.find().limit(1000)
 accounts_ids = {}
 
 for tweet in tweets:
