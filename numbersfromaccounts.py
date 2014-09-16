@@ -22,9 +22,8 @@ for tweet in tweets:
         del accounts_ids[name]
         accounts_ids = {name:tweet_ids}
 
-print accounts_ids
-#for item in accounts_ids:
-
+for item in accounts_ids:
+    print item
 
 '''for tweet in tweets:
     accounts.append(tweet['user']['screen_name'])
