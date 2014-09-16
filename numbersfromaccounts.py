@@ -25,7 +25,12 @@ for tweet in tweets:
 #print accounts_ids
 
 for key,value in accounts_ids.iteritems():
-    print key+": "+str(value)
+    #print key+": "+str(value)
+    numbers = []
+    phones = db_parsed.phones.find({"id":{"$in":value}})
+    for p in phones:
+        numbers.append(p['phone_no'])
+    print key+": "+str(list(Set(numbers)))
 
 '''for tweet in tweets:
     accounts.append(tweet['user']['screen_name'])
