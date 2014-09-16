@@ -15,15 +15,14 @@ for tweet in tweets:
     tweet_ids = []
     if name not in accounts_ids:
         tweet_ids.append(tweet['_id'])
-        accounts_ids = {name:tweet_ids}
+        accounts_ids[name]=tweet_ids
     else:
         tweet_ids = accounts_ids.get(name)
         tweet_ids.append(tweet['_id'])
         del accounts_ids[name]
-        accounts_ids = {name:tweet_ids}
+        accounts_ids[name]=tweet_ids
 
-for item in accounts_ids:
-    print item
+print accounts_ids
 
 '''for tweet in tweets:
     accounts.append(tweet['user']['screen_name'])
