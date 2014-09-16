@@ -18,7 +18,7 @@ account_names = Set(accounts)
 print account_names
 
 for name in account_names:
-    key = 'user.{screen_name}'.format(username=name)
+    key = 'user.{screen_name}'.format(screen_name=name)
     #tweet_ids = db.tweets.find({"user.screen_name":name}).distinct("_id")
     tweet_ids = db.tweets.find({key: {'$exists': True}}).distinct("_id")
     numbers = []
