@@ -14,12 +14,14 @@ for tweet in tweets:
 
 account_names = Set(accounts)
 
-for name in account_names:
+print account_names
+
+'''for name in account_names:
     tweet_ids = db.tweets.find({"user.screen_name":name}).distinct("id")
     numbers = []
     phones = db_parsed.phones.find({"id":{"$in":tweet_ids}})
     for p in phones:
-        numbers.append(p['phone_no'])
-    print name+"\t\t"+list(Set(numbers))
+        numbers.append(p['phone_no'])'''
+    #print name+"\t\t"+list(Set(numbers))
 
 
