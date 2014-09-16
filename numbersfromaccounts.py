@@ -32,6 +32,6 @@ try:
         print name+"\t\t"+str(list(Set(numbers)))
 
 except:
-    print sys.exec_info()
+    print sys.exc_info()
 
 
