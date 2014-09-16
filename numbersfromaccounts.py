@@ -7,7 +7,7 @@ import sys
 db = pymongo.MongoClient().Twitter
 db_parsed = pymongo.MongoClient().TwitterParsed
 
-tweets = db.tweets.find().limit(200)
+tweets = db.tweets.find()
 accounts_ids = {}
 
 for tweet in tweets:
@@ -30,7 +30,8 @@ for key,value in accounts_ids.iteritems():
     phones = db_parsed.phones.find({"id":{"$in":value}})
     for p in phones:
         numbers.append(p['phone_no'])
-    print key+": "+str(list(Set(numbers)))
+    if(len(list(Set(numbers)))>1):
+        print key+": "+str(list(Set(numbers)))
 
 '''for tweet in tweets:
     accounts.append(tweet['user']['screen_name'])
