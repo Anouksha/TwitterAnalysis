@@ -22,10 +22,10 @@ try:
     for name in account_names:
         key = 'user.{screen_name}'.format(screen_name=name)
         #tweet_ids = db.tweets.find({"user.screen_name":name}).distinct("_id")
-        tweet_ids= db.tweets.find({key: {'$exists': True}}, { "id":1, "_id":0 })
+        tweet_ids= db.tweets.find({key: {'$exists': True}}, {"_id":1 })
         for id in tweet_ids:
             ids.append(id)
-        print ids
+        print str(ids)
         break
         numbers = []
         phones = db_parsed.phones.find({"id":{"$in":ids}})
