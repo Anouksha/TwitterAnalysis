@@ -5,7 +5,7 @@ import re
 
 db_parsed = pymongo.MongoClient().TwitterParsed
 phone_numbers = db_parsed.phonestrain.distinct("phone_no")
-zeroPattern = re.compile(r'000000*')
+zeroPattern = re.compile(r'^000*')
 
 
 def getPhoneCount(tweets):
@@ -28,7 +28,7 @@ for phone in phone_numbers:
     data['representations'] = getUniqueRepresentations(tweets)
     c+=1
     print data
-    if c==5:
+    if c==15:
         break
 
 
