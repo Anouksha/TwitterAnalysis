@@ -5,7 +5,7 @@ import re
 
 db_parsed = pymongo.MongoClient().TwitterParsed
 phone_numbers = db_parsed.phonestrain.distinct("phone_no")
-zeroPattern = re.compile(r'000000000*')
+zeroPattern = re.compile(r'000000*')
 
 
 def getPhoneCount(tweets):
