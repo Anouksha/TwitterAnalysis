@@ -23,8 +23,8 @@ for phone in phone_numbers:
     data['count'] = getPhoneCount(tweets)
     data['representations'] = getUniqueRepresentations(tweets)
     c+=1
+    print data
     if c==5:
         break
 
-print data
 
