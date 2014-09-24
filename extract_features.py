@@ -3,7 +3,7 @@ __author__ = 'anouksha'
 import pymongo
 
 db_parsed = pymongo.MongoClient().TwitterParsed
-phone_numbers = db_parsed.phonestrain.distinct("phone_no").limit(10)
+phone_numbers = db_parsed.phonestrain.distinct("phone_no")
 
 
 def getPhoneCount(tweets):
@@ -21,6 +21,7 @@ for phone in phone_numbers:
     data['phone_no'] = phone
     data['count'] = getPhoneCount(tweets)
     data['representations'] = getUniqueRepresentations(tweets)
+    break
 
 
 
