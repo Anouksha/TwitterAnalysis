@@ -18,6 +18,8 @@ def getUniqueRepresentations(tweets):
 print "Starting feature extraction"
 c=0
 
+print phone_numbers
+
 for phone in phone_numbers:
     if zeroPattern.match(phone):
         continue
