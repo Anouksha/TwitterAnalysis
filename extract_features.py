@@ -4,7 +4,7 @@ import pymongo
 import re
 
 db_parsed = pymongo.MongoClient().TwitterParsed
-phone_numbers = db_parsed.phonestrain.find({"phone_no":{"$regex":"!000000000*"}}).distinct("phone_no")
+phone_numbers = db_parsed.phonestrain.distinct("phone_no")
 #zeroPattern = re.compile(r'000000000*')
 
 
@@ -19,6 +19,8 @@ print "Starting feature extraction"
 c=0
 
 for phone in phone_numbers:
+    if phone.contains("00000000"):
+        continue
     tweets = db_parsed.phonestrain.find({"phone_no":phone})
     data = {}
     data['phone_no'] = phone
