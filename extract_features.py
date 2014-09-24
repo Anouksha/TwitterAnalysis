@@ -15,6 +15,10 @@ def getUniqueRepresentations(tweets):
     original = tweets.distinct("o_pno")
     return original
 
+def getNumOfAccounts(tweets):
+    accounts = tweets.dictinct("user.screen_name")
+    return accounts.size()
+
 print "Starting feature extraction"
 c=0
 
@@ -28,6 +32,7 @@ for phone in phone_numbers:
     data['phone_no'] = phone
     data['count'] = getPhoneCount(tweets)
     data['representations'] = getUniqueRepresentations(tweets)
+    data['num_accounts'] = getNumOfAccounts(tweets)
     c+=1
     print data
     if c==15:
