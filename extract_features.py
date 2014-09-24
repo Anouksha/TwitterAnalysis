@@ -1,9 +1,11 @@
 __author__ = 'anouksha'
 
 import pymongo
+import re
 
 db_parsed = pymongo.MongoClient().TwitterParsed
-phone_numbers = db_parsed.phonestrain.distinct("phone_no")
+phone_numbers = db_parsed.phonestrain.find({"phone_no":{"$regex":"^000000000*"}}).distinct("phone_no")
+#zeroPattern = re.compile(r'000000000*')
 
 
 def getPhoneCount(tweets):
