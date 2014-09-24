@@ -5,7 +5,7 @@ import re
 
 db_parsed = pymongo.MongoClient().TwitterParsed
 phone_numbers = db_parsed.phonestrain.distinct("phone_no")
-zeroPattern = re.compile(r'^0*')
+zeroPattern = re.compile('^0')
 
 
 def getPhoneCount(tweets):
@@ -18,7 +18,7 @@ def getUniqueRepresentations(tweets):
 print "Starting feature extraction"
 c=0
 
-print phone_numbers
+#print phone_numbers
 
 for phone in phone_numbers:
     if zeroPattern.match(phone):
