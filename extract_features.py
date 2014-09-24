@@ -17,7 +17,7 @@ def getUniqueRepresentations(tweets):
 
 def getNumOfAccounts(tweets):
     accounts = tweets.distinct("user.screen_name")
-    return accounts.size()
+    return len(accounts)
 
 print "Starting feature extraction"
 c=0
