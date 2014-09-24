@@ -14,6 +14,7 @@ def getUniqueRepresentations(tweets):
     return original
 
 print "Starting feature extraction"
+c=0
 
 for phone in phone_numbers:
     tweets = db_parsed.phonestrain.find({"phone_no":phone})
@@ -21,7 +22,9 @@ for phone in phone_numbers:
     data['phone_no'] = phone
     data['count'] = getPhoneCount(tweets)
     data['representations'] = getUniqueRepresentations(tweets)
-    break
+    c+=1
+    if c==5:
+        break
 
 print data
 
