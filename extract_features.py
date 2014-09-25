@@ -3,6 +3,8 @@ __author__ = 'anouksha'
 import pymongo
 import re
 import numpy
+import time
+import math
 
 db_parsed = pymongo.MongoClient().TwitterParsed
 phone_numbers = db_parsed.phonestrain.distinct("phone_no")
@@ -29,20 +31,24 @@ def get_mean_text(tweets):
     return (total_len*1.0/count)
 
 def get_std_dev_text(tweets):
-    text_len = []
+    calc = 0
+    n = 0
+    mean = get_mean_text(tweets)
     for tweet in tweets:
-        text_len.append(len(tweet['text']))
-    return numpy.std(text_len)
+        diff = math.abs(len(tweet['text'])-mean)
+        calc += math.pow(diff,2)
+        n+=1
+    return math.sqrt(calc*1.0/n)
 
 def get_first_occurrence(tweets):
     dates = tweets.distinct("created_at")
     dates.sort()
-    return dates[0]
+    return time.strptime(dates[0],"%Y-%m-%dT%H:%M:%S")
 
 def get_last_occurrence(tweets):
     dates = tweets.distinct("created_at")
     dates.sort()
-    return dates[len(dates)-1]
+    return time.strptime(dates[len(dates)-1], "%Y-%m-%dT%H:%M:%S")
 
 print "Starting feature extraction"
 c=0
