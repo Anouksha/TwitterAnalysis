@@ -42,12 +42,14 @@ def get_std_dev_text(tweets, mean):
 def get_first_occurrence(tweets):
     dates = tweets.distinct("created_at")
     dates.sort()
-    return time.strptime(dates[0],"%Y-%m-%dT%H:%M:%S")
+    #return time.strptime(dates[0],"%Y-%m-%dT%H:%M:%S")
+    return dates[0].isoformat(' ')
 
 def get_last_occurrence(tweets):
     dates = tweets.distinct("created_at")
     dates.sort()
-    return time.strptime(dates[len(dates)-1], "%Y-%m-%dT%H:%M:%S")
+    #return time.strptime(dates[len(dates)-1], "%Y-%m-%dT%H:%M:%S")
+    return dates[len(dates)-1].isoformat(' ')
 
 print "Starting feature extraction"
 c=0
