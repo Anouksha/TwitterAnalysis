@@ -30,11 +30,9 @@ def get_mean_text(tweets):
         total_len+=len(tweet['text'])
     return (total_len*1.0/count)
 
-def get_std_dev_text(tweets):
+def get_std_dev_text(tweets, mean):
     calc = 0
     n = 0
-    tweets_2 = tweets
-    mean = get_mean_text(tweets_2)
     for tweet in tweets:
         diff = math.abs(len(tweet['text'])-mean)
         calc += math.pow(diff,2)
@@ -66,7 +64,7 @@ for phone in phone_numbers:
     data['representations'] = get_unique_representations(tweets)
     data['num_accounts'] = get_num_of_accounts(tweets)
     data['mean_text'] = get_mean_text(tweets)
-    data['deviation_text'] = get_std_dev_text(tweets)
+    data['deviation_text'] = get_std_dev_text(tweets, data['mean_text'])
     data['first_occurrence'] = get_first_occurrence(tweets)
     data['last_occurrence'] = get_last_occurrence(tweets)
     c+=1
