@@ -33,7 +33,8 @@ def get_mean_text(tweets):
 def get_std_dev_text(tweets):
     calc = 0
     n = 0
-    mean = get_mean_text(tweets)
+    tweets_2 = tweets
+    mean = get_mean_text(tweets_2)
     for tweet in tweets:
         diff = math.abs(len(tweet['text'])-mean)
         calc += math.pow(diff,2)
