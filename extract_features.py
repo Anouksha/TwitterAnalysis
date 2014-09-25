@@ -34,6 +34,16 @@ def get_std_dev_text(tweets):
         text_len.append(len(tweet['text']))
     return numpy.std(text_len)
 
+def get_first_occurrence(tweets):
+    dates = tweets.distinct("created_at")
+    dates.sort()
+    return dates[0]
+
+def get_last_occurrence(tweets):
+    dates = tweets.distinct("created_at")
+    dates.sort()
+    return dates[len(dates)-1]
+
 print "Starting feature extraction"
 c=0
 
@@ -50,6 +60,8 @@ for phone in phone_numbers:
     data['num_accounts'] = get_num_of_accounts(tweets)
     data['mean_text'] = get_mean_text(tweets)
     data['deviation_text'] = get_std_dev_text(tweets)
+    data['first_occurrence'] = get_first_occurrence(tweets)
+    data['last_occurrence'] = get_last_occurrence(tweets)
     c+=1
     print data
     if c==15:
