@@ -51,6 +51,10 @@ def get_last_occurrence(tweets):
     #return time.strptime(dates[len(dates)-1], "%Y-%m-%dT%H:%M:%S")
     return dates[len(dates)-1].isoformat(' ')
 
+def get_num_truncated(number):
+    count = db_parsed.phonestrain.find({"phone_no":number},{"truncated":True}).count()
+    return count
+
 print "Starting feature extraction"
 c=0
 
@@ -69,6 +73,7 @@ for phone in phone_numbers:
     #data['deviation_text'] = get_std_dev_text(tweets, data['mean_text'])
     data['first_occurrence'] = get_first_occurrence(tweets)
     data['last_occurrence'] = get_last_occurrence(tweets)
+    data['num_truncated'] = get_num_truncated(phone)
     c+=1
     print data
     if c==15:
