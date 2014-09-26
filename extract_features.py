@@ -52,7 +52,7 @@ def get_last_occurrence(tweets):
     return dates[len(dates)-1].isoformat(' ')
 
 def get_num_truncated(number):
-    count = db_parsed.phonestrain.find({"phone_no":number},{"truncated":True}).count()
+    count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"truncated":True}]}).count()
     return count
 
 print "Starting feature extraction"
