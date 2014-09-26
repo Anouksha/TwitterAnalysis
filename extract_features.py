@@ -55,6 +55,10 @@ def get_num_truncated(number):
     count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"truncated":True}]}).count()
     return count
 
+def get_num_retweeted(number):
+    count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"retweeted":True}]}).count()
+    return count
+
 print "Starting feature extraction"
 c=0
 
@@ -74,6 +78,7 @@ for phone in phone_numbers:
     data['first_occurrence'] = get_first_occurrence(tweets)
     data['last_occurrence'] = get_last_occurrence(tweets)
     data['num_truncated'] = get_num_truncated(phone)
+    data['num_in_retweets'] = get_num_retweeted(phone)
     c+=1
     print data
     if c==15:
