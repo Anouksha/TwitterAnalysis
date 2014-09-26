@@ -59,6 +59,19 @@ def get_num_retweeted(number):
     count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"retweeted":True}]}).count()
     return count
 
+def get_num_verified(number):
+    count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"user.verified":True}]}).count()
+    return count
+
+def get_num_jumped_timezones(number, tweets):
+    accounts = tweets.distinct("user.screen_name")
+    count = 0
+    for account in accounts:
+        timezones = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"user.screen_name":account}]}).distinct("user.timezone")
+        if len(timezones)>1:
+            count+=1
+    return count
+
 print "Starting feature extraction"
 c=0
 
@@ -79,6 +92,8 @@ for phone in phone_numbers:
     data['last_occurrence'] = get_last_occurrence(tweets)
     data['num_truncated'] = get_num_truncated(phone)
     data['num_in_retweets'] = get_num_retweeted(phone)
+    data['verified_num'] = get_num_verified(phone)
+    data['jumped_timezones'] = get_num_jumped_timezones(phone, tweets)
     c+=1
     print data
     if c==15:
