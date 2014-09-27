@@ -36,8 +36,8 @@ def get_std_dev_text(tweets, mean):
     for tweet in tweets:
         diff = math.fabs(len(tweet['text'])-mean)
         calc += math.pow(diff,2)
-        n+=1
-    return math.sqrt(calc*1.0/n)
+        n += 1
+    return math.sqrt(calc/n)
 
 def get_first_occurrence(tweets):
     dates = tweets.distinct("created_at")
