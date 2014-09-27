@@ -84,7 +84,7 @@ def get_total_hashtags(number):
     tweets = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"entities.hashtags":{"$not": {"$size": 0}}}]})
     total_hashtags = 0
     for tweet in tweets:
-        hashtags = tweet['entities.hashtags']
+        hashtags = tweet['entities']['hashtags']
         total_hashtags += len(hashtags)
     return total_hashtags
 
