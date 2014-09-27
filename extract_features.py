@@ -55,6 +55,10 @@ def get_last_occurrence(tweets):
     #return time.strptime(dates[len(dates)-1], "%Y-%m-%dT%H:%M:%S")
     return dates[len(dates)-1].isoformat(' ')
 
+def get_num_sources(tweets):
+    sources = tweets.distinct("source")
+    return len(sources)
+
 def get_num_truncated(number):
     count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"truncated":True}]}).count()
     return count
@@ -94,6 +98,7 @@ for phone in phone_numbers:
     data['deviation_text'] = get_std_dev_text(phone, data['mean_text'])
     data['first_occurrence'] = get_first_occurrence(tweets)
     data['last_occurrence'] = get_last_occurrence(tweets)
+    data['num_sources'] = get_num_sources(tweets)
     data['num_truncated'] = get_num_truncated(phone)
     data['num_in_retweets'] = get_num_retweeted(phone)
     data['verified_num'] = get_num_verified(phone)
