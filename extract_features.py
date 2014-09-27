@@ -33,7 +33,7 @@ def get_mean_text(tweets):
 def get_std_dev_text(number, mean):
     calc = 0.0
     n = 0.0
-    print "Mean: "+str(mean)
+    #print "Mean: "+str(mean)
     tweets = db_parsed.phonestrain.find({"phone_no":number})
     for tweet in tweets:
         diff = (len(tweet['text'])-mean)*1.0
@@ -80,6 +80,14 @@ def get_num_jumped_timezones(number, tweets):
             count+=1
     return count
 
+def get_total_hashtags(number):
+    tweets = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"entities.hashtags":{"$not": {"$size": 0}}}]})
+    total_hashtags = 0
+    for tweet in tweets:
+        hashtags = tweet['entities.hashtags']
+        total_hashtags += len(hashtags)
+    return total_hashtags
+
 print "Starting feature extraction"
 c=0
 
@@ -103,6 +111,7 @@ for phone in phone_numbers:
     data['num_in_retweets'] = get_num_retweeted(phone)
     data['verified_num'] = get_num_verified(phone)
     data['jumped_timezones'] = get_num_jumped_timezones(phone, tweets)
+    data['total_hashtags'] = get_total_hashtags(phone)
     c+=1
     print data
     if c==15:
