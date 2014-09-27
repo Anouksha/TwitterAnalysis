@@ -30,14 +30,15 @@ def get_mean_text(tweets):
         total_len+=len(tweet['text'])
     return (total_len*1.0/count)
 
-def get_std_dev_text(tweets, mean):
+def get_std_dev_text(number, mean):
     calc = 0.0
     n = 0.0
     print "Mean: "+str(mean)
+    tweets = db_parsed.phonestrain.find({"phone_no":number})
     for tweet in tweets:
         diff = (len(tweet['text'])-mean)*1.0
         calc += math.pow(diff,2)
-        print calc
+        #print calc
         n += 1.0
     val = (calc*1.0)/(n)
     return math.sqrt(val)
