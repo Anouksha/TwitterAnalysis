@@ -88,6 +88,11 @@ def get_total_urls(tweets):
     count = db_parsed.resolve_urls.find({"tweet_id":{"$in":tweet_ids}}).count()
     return count
 
+def get_unique_urls(tweets):
+    tweet_ids = tweets.distinct("_id")
+    ids = db_parsed.resolve_urls.find({"tweet_id":{"$in":tweet_ids}}).distinct("f_url")
+    return len(ids)
+
 def get_num_jumped_timezones(number, tweets):
     accounts = tweets.distinct("user.screen_name")
     count = 0
@@ -130,6 +135,7 @@ for phone in phone_numbers:
     data['user_mentions'] = get_num_user_mentions(phone)
     data['num_replies'] = get_num_in_replies(phone)
     data['total_urls'] = get_total_urls(tweets)
+    data['unique_urls'] = get_unique_urls(tweets)
     data['jumped_timezones'] = get_num_jumped_timezones(phone, tweets)
     data['total_hashtags'] = get_total_hashtags(phone)
     c+=1
