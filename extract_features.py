@@ -83,6 +83,11 @@ def get_num_in_replies(number):
     count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"in_reply_to_screen_name":{"$ne": None}}]}).count()
     return count
 
+def get_total_urls(tweets):
+    tweet_ids = tweets.distinct("_id")
+    count = db_parsed.resolve_urls.find({"tweet_id":{"$in":tweet_ids}}).count()
+    return count
+
 def get_num_jumped_timezones(number, tweets):
     accounts = tweets.distinct("user.screen_name")
     count = 0
@@ -124,6 +129,7 @@ for phone in phone_numbers:
     data['verified_num'] = get_num_verified(phone)
     data['user_mentions'] = get_num_user_mentions(phone)
     data['num_replies'] = get_num_in_replies(phone)
+    data['total_urls'] = get_total_urls(tweets)
     data['jumped_timezones'] = get_num_jumped_timezones(phone, tweets)
     data['total_hashtags'] = get_total_hashtags(phone)
     c+=1
