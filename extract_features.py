@@ -144,12 +144,15 @@ for phone in phone_numbers:
     data['total_hashtags'] = get_total_hashtags(phone)
 
     tweet_data.append(data)
-    if len(tweet_data) == 15:
+    if len(tweet_data) == 10000:
         insert_to_db(tweet_data)
-        break
+        tweet_data = []
+
     #c+=1
     #print data
     #if c==15:
     #    break
+insert_to_db(tweet_data)
+print "Done"
 
 
