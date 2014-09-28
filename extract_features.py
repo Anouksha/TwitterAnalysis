@@ -146,6 +146,7 @@ for phone in phone_numbers:
     tweet_data.append(data)
     if len(tweet_data) == 10000:
         insert_to_db(tweet_data)
+        print "Batch inserted"
         tweet_data = []
 
     #c+=1
