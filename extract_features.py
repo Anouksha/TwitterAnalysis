@@ -117,7 +117,7 @@ print "Starting feature extraction"
 c=0
 
 #print phone_numbers
-tweet_data = []
+#tweet_data = []
 
 for phone in phone_numbers:
     #if zeroPattern.match(phone):
@@ -143,17 +143,20 @@ for phone in phone_numbers:
     data['jumped_timezones'] = get_num_jumped_timezones(phone, tweets)
     data['total_hashtags'] = get_total_hashtags(phone)
 
-    tweet_data.append(data)
+    print data
+    insert_to_db(data)
+
+    '''tweet_data.append(data)
     if len(tweet_data) == 100:
         insert_to_db(tweet_data)
         print "Batch inserted"
-        tweet_data[:] = []
+        tweet_data[:] = []'''
 
     #c+=1
     #print data
     #if c==15:
     #    break
-insert_to_db(tweet_data)
+#insert_to_db(tweet_data)
 print "Done"
 
 
