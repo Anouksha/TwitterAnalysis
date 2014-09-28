@@ -115,7 +115,7 @@ for phone in phone_numbers:
         continue
     tweets = db_parsed.phonestrain.find({"phone_no":phone})
     data = {}
-    data['phone_no'] = phone
+    data['phone_no'] = str(phone)
     data['count'] = get_phone_count(tweets)
     data['representations'] = get_unique_representations(tweets)
     data['num_accounts'] = get_num_of_accounts(tweets)
