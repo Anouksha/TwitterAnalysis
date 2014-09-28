@@ -80,7 +80,7 @@ def get_num_user_mentions(number):
     return total_mentions
 
 def get_num_in_replies(number):
-    count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"in_reply_to_screen_name":{"$ne": "null"}}]}).count()
+    count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"in_reply_to_screen_name":{"$ne": None}}]}).count()
     return count
 
 def get_num_jumped_timezones(number, tweets):
