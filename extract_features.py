@@ -110,14 +110,18 @@ def get_total_hashtags(number):
         total_hashtags += len(hashtags)
     return total_hashtags
 
+def insert_to_db(tweet_data):
+    db_parsed.phone_features.insert(tweet_data)
+
 print "Starting feature extraction"
 c=0
 
 #print phone_numbers
+tweet_data = []
 
 for phone in phone_numbers:
-    if zeroPattern.match(phone):
-        continue
+    #if zeroPattern.match(phone):
+    #    continue
     tweets = db_parsed.phonestrain.find({"phone_no":phone})
     data = {}
     data['phone_no'] = str(phone)
@@ -138,9 +142,14 @@ for phone in phone_numbers:
     data['unique_urls'] = get_unique_urls(tweets)
     data['jumped_timezones'] = get_num_jumped_timezones(phone, tweets)
     data['total_hashtags'] = get_total_hashtags(phone)
-    c+=1
-    print data
-    if c==15:
+
+    tweet_data.append(data)
+    if len(tweet_data) == 15:
+        insert_to_db(tweet_data)
         break
+    #c+=1
+    #print data
+    #if c==15:
+    #    break
 
 
