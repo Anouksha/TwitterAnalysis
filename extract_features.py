@@ -71,6 +71,18 @@ def get_num_verified(number):
     count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"user.verified":True}]}).count()
     return count
 
+def get_num_user_mentions(number):
+    tweets = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"entities.user_mentions":{"$not": {"$size": 0}}}]})
+    total_mentions = 0
+    for tweet in tweets:
+        mentions = tweet['entities']['user_mentions']
+        total_mentions += len(mentions)
+    return total_mentions
+
+def get_num_in_replies(number):
+    count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"in_reply_to_screen_name":{"$ne": "null"}}]}).count()
+    return count
+
 def get_num_jumped_timezones(number, tweets):
     accounts = tweets.distinct("user.screen_name")
     count = 0
@@ -110,6 +122,8 @@ for phone in phone_numbers:
     data['num_truncated'] = get_num_truncated(phone)
     data['num_in_retweets'] = get_num_retweeted(phone)
     data['verified_num'] = get_num_verified(phone)
+    data['user_mentions'] = get_num_user_mentions(phone)
+    data['num_replies'] = get_num_in_replies(phone)
     data['jumped_timezones'] = get_num_jumped_timezones(phone, tweets)
     data['total_hashtags'] = get_total_hashtags(phone)
     c+=1
