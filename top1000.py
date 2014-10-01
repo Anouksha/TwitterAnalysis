@@ -12,9 +12,9 @@ for number in numbers:
 print "Done"'''
 
 mapper = Code("""function () {
-                this.phone_no.forEach(function(z) {
-                  emit(z, 1);
-                });
+                var key = this.phone_no;
+                var value = 1;
+                emit(key,value);
              }
               """)
 reducer = Code("""
