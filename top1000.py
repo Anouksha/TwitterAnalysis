@@ -41,7 +41,7 @@ numbers = db.phonestrain.distinct("phone_no")
 for number in numbers:
     tweets = db.phonestrain.find({"phone_no":number})
     count = get_count(tweets)
-    print number + "\t" + count
+    print number + "\t" + str(count)
 
 print "Done"
 
