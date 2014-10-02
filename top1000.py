@@ -11,7 +11,7 @@ for number in numbers:
 
 print "Done"'''
 
-mapper = Code("""function () {
+'''mapper = Code("""function () {
                 var key = this.phone_no;
                 var value = 1;
                 emit(key,value);
@@ -30,6 +30,18 @@ reducer = Code("""
 result = db.phonestrain.map_reduce(mapper, reducer, "myresults")
 for doc in result.find():
     print doc
+
+print "Done"'''
+
+def get_count(tweets):
+    return tweets.count()
+
+numbers = db.phonestrain.distinct("phone_no")
+
+for number in numbers:
+    tweets = db.phonestrain.find({"phone_no":number})
+    count = get_count(tweets)
+    print number + "\t" + count
 
 print "Done"
 
