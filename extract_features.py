@@ -173,7 +173,7 @@ for phone in phone_numbers:
     data['unique_hashtags'] = get_unique_hashtags(phone)
 
     print data
-    #insert_to_db(data)
+    insert_to_db(data)
 
     '''tweet_data.append(data)
     if len(tweet_data) == 100:
@@ -181,10 +181,10 @@ for phone in phone_numbers:
         print "Batch inserted"
         tweet_data[:] = []'''
 
-    c+=1
+    #c+=1
     #print data
-    if c==15:
-        break
+    #if c==15:
+    #    break
 #insert_to_db(tweet_data)
 print "Done"
 
