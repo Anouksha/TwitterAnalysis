@@ -16,7 +16,8 @@ def get_phone_count(tweets):
 
 def get_unique_representations(tweets):
     original = tweets.distinct("o_pno")
-    return original
+    total = len(original)
+    return total
 
 def get_num_of_accounts(tweets):
     accounts = tweets.distinct("user.screen_name")
@@ -84,14 +85,30 @@ def get_num_in_replies(number):
     return count
 
 def get_total_urls(tweets):
-    tweet_ids = tweets.distinct("_id")
+    '''tweet_ids = tweets.distinct("_id")
     count = db_parsed.resolve_urls.find({"tweet_id":{"$in":tweet_ids}}).count()
-    return count
+    return count'''
+    total = 0
+    for tweet in tweets:
+        urls = tweet['url_check']
+        if urls:
+            for url in urls:
+                total += 1
+    return total
 
 def get_unique_urls(tweets):
-    tweet_ids = tweets.distinct("_id")
+    '''tweet_ids = tweets.distinct("_id")
     ids = db_parsed.resolve_urls.find({"tweet_id":{"$in":tweet_ids}}).distinct("f_url")
-    return len(ids)
+    return len(ids)'''
+    count = 0
+    unique_urls = []
+    for tweet in tweets:
+        urls = tweet['url_check']
+        if urls:
+            for url in urls:
+                if url['f_url'] not in unique_urls:
+                    unique_urls.append(url)
+    return len(unique_urls)
 
 def get_num_jumped_timezones(number, tweets):
     accounts = tweets.distinct("user.screen_name")
@@ -110,6 +127,16 @@ def get_total_hashtags(number):
         total_hashtags += len(hashtags)
     return total_hashtags
 
+def get_unique_hashtags(number):
+    tweets = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"entities.hashtags":{"$not": {"$size": 0}}}]})
+    unique_hashtags = []
+    for tweet in tweets:
+        hashtags = tweet['entities']['hashtags']
+        for hashtag in hashtags:
+            if hashtag['text'] not in unique_hashtags:
+                unique_hashtags.append(hashtag['text'])
+    return len(unique_hashtags)
+
 def insert_to_db(tweet_data):
     db_parsed.phone_features.insert(tweet_data)
 
@@ -122,31 +149,32 @@ c=0
 for phone in phone_numbers:
     #if zeroPattern.match(phone):
     #    continue
-    c+=1
-    if(c>85005):
-        tweets = db_parsed.phonestrain.find({"phone_no":phone})
-        data = {}
-        data['phone_no'] = str(phone)
-        data['count'] = get_phone_count(tweets)
-        data['representations'] = get_unique_representations(tweets)
-        data['num_accounts'] = get_num_of_accounts(tweets)
-        data['mean_text'] = get_mean_text(tweets)
-        data['deviation_text'] = get_std_dev_text(phone, data['mean_text'])
-        data['first_occurrence'] = get_first_occurrence(tweets)
-        data['last_occurrence'] = get_last_occurrence(tweets)
-        data['num_sources'] = get_num_sources(tweets)
-        data['num_truncated'] = get_num_truncated(phone)
-        data['num_in_retweets'] = get_num_retweeted(phone)
-        data['verified_num'] = get_num_verified(phone)
-        data['user_mentions'] = get_num_user_mentions(phone)
-        data['num_replies'] = get_num_in_replies(phone)
-        data['total_urls'] = get_total_urls(tweets)
-        data['unique_urls'] = get_unique_urls(tweets)
-        data['jumped_timezones'] = get_num_jumped_timezones(phone, tweets)
-        data['total_hashtags'] = get_total_hashtags(phone)
+    #c+=1
+    #if(c>85005):
+    tweets = db_parsed.phonestrain.find({"phone_no":phone})
+    data = {}
+    data['phone_no'] = str(phone)
+    data['count'] = get_phone_count(tweets)
+    data['num_representations'] = get_unique_representations(tweets)
+    data['num_accounts'] = get_num_of_accounts(tweets)
+    data['mean_text'] = get_mean_text(tweets)
+    data['deviation_text'] = get_std_dev_text(phone, data['mean_text'])
+    data['first_occurrence'] = get_first_occurrence(tweets)
+    data['last_occurrence'] = get_last_occurrence(tweets)
+    data['num_sources'] = get_num_sources(tweets)
+    data['num_truncated'] = get_num_truncated(phone)
+    data['num_in_retweets'] = get_num_retweeted(phone)
+    data['verified_num'] = get_num_verified(phone)
+    data['user_mentions'] = get_num_user_mentions(phone)
+    data['num_replies'] = get_num_in_replies(phone)
+    data['total_urls'] = get_total_urls(tweets)
+    data['unique_urls'] = get_unique_urls(tweets)
+    data['jumped_timezones'] = get_num_jumped_timezones(phone, tweets)
+    data['total_hashtags'] = get_total_hashtags(phone)
+    data['unique_hashtags'] = get_unique_hashtags(phone)
 
-        print data
-        insert_to_db(data)
+    #print data
+    #insert_to_db(data)
 
     '''tweet_data.append(data)
     if len(tweet_data) == 100:
