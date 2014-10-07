@@ -92,8 +92,7 @@ def get_total_urls(tweets):
     for tweet in tweets:
         urls = tweet['url_check']
         if urls:
-            for url in urls:
-                total += 1
+            total += len(urls)
     return total
 
 def get_unique_urls(tweets):
