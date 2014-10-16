@@ -1,13 +1,9 @@
 #!/usr/bin/python
-import json
+
 import re
 import datetime
 from pymongo import MongoClient
-import pymongo
-import time
-import yaml
-import threading
-import gridfs
+
 
 client = MongoClient()
 db = client.TwitterParsed
