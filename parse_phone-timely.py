@@ -31,7 +31,7 @@ def start(tweet):
 
 
     #if len(data) == 10000:
-    insert2db(data)
+        insert2db(data)
     #    print len(data), " tweets processed"
     #    data[:] = []
 
