@@ -15,7 +15,7 @@ phonePattern = re.compile(r'([+]?([0-9]+)?[\(.*=$,~ \n\t-]?\s*(\d{3})\s*\)?[\\\/
 def start(tweet):
     a = phonePattern.findall(tweet['text'])
     p_no = ''
-    arr = []
+    data = []
     if a:
         for i in a[0][0]:
             if i.isdigit():
@@ -30,13 +30,13 @@ def start(tweet):
         data.append(tweet)
 
 
-    if len(data) == 10000:
-        insert2db()
-        print len(data), " tweets processed"
-        data[:] = []
+    #if len(data) == 10000:
+    insert2db(data)
+    #    print len(data), " tweets processed"
+    #    data[:] = []
 
 
-def insert2db():
+def insert2db(data):
     db.bharat_phonestrain.insert(data)
 
 
@@ -51,18 +51,18 @@ def run():
         t.start()
         print tweet
         #start(tweet)
-    print "ok"
-    print datetime.datetime.now()
+    #print "ok"
+    #print datetime.datetime.now()
     while threading.activeCount() > 1:
         time.sleep(1)
     #    print gcnt, " tweets processed"
 
-    insert2db()
+    #insert2db()
 
 
 print "phone parsing starting"
 db_twitter = client.tweets
-data = []
+#data = []
 #db.phonestrain.drop()
 run()
 print "Done parsing..."
