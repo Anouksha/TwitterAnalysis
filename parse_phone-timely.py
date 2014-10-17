@@ -45,12 +45,12 @@ def run():
 
     for tweet in tweets:
         t = threading.Thread(target=start, args=(tweet,))
-        t.daemon = True
+        #t.daemon = True
         while threading.activeCount() > 50:
             time.sleep(1)
         t.start()
         print tweet
-        start(tweet)
+        #start(tweet)
     print "ok"
     print datetime.datetime.now()
     while threading.activeCount() > 1:
