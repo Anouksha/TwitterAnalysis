@@ -65,3 +65,4 @@ db_twitter = client.tweets
 data = []
 #db.phonestrain.drop()
 run()
+print "Done parsing..."
