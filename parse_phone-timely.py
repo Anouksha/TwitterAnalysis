@@ -65,6 +65,6 @@ print "phone parsing starting"
 db_twitter = client.tweets
 #data = []
 #db.phonestrain.drop()
-ids = db.bharat_phonestrain.distinct("_id")
+ids = db.bharat_phonestrain.find({"$gte":{"_id":0}})
 run()
 print "Done parsing..."
