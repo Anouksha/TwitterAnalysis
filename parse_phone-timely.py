@@ -37,7 +37,8 @@ def start(tweet):
         try:
             insert2db(data)
         except pymongo.errors.DuplicateKeyError:
-            db.bharat_phonestrain.save(tweet)
+            db.bharat_phonestrain.remove({"_id":tweet['_id']})
+            insert2db(data)
     #    print len(data), " tweets processed"
     #    data[:] = []
 
