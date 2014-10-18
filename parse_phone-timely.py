@@ -50,9 +50,9 @@ def run():
         #while threading.activeCount() > 50:
         #    time.sleep(1)
         #t.start()
-        if tweet['id_str'] not in ids:
-            #print tweet
-            start(tweet)
+        #if tweet['id_str'] not in ids:
+        #print tweet
+        start(tweet)
     #print "ok"
     #print datetime.datetime.now()
     #while threading.activeCount() > 1:
@@ -66,9 +66,9 @@ print "phone parsing starting"
 db_twitter = client.tweets
 #data = []
 #db.phonestrain.drop()
-phonestrain_tweets = db.bharat_phonestrain.find()
+'''phonestrain_tweets = db.bharat_phonestrain.find()
 ids = []
 for t in phonestrain_tweets:
-    ids.append(t['_id'])
+    ids.append(t['_id'])'''
 run()
 print "Done parsing..."
