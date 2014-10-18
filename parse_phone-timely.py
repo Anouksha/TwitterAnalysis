@@ -42,19 +42,20 @@ def insert2db(data):
 
 def run():
     tweets = db_twitter.bharat_phonetweets.find()
-
+    c = 0
     for tweet in tweets:
-        t = threading.Thread(target=start, args=(tweet,))
+        #t = threading.Thread(target=start, args=(tweet,))
         #t.daemon = True
-        while threading.activeCount() > 50:
-            time.sleep(1)
-        t.start()
-        print tweet
-        #start(tweet)
+        #while threading.activeCount() > 50:
+        #    time.sleep(1)
+        #t.start()
+        if(tweet['_id'] not in ids):
+            print tweet
+            start(tweet)
     #print "ok"
     #print datetime.datetime.now()
-    while threading.activeCount() > 1:
-        time.sleep(1)
+    #while threading.activeCount() > 1:
+    #    time.sleep(1)
     #    print gcnt, " tweets processed"
 
     #insert2db()
@@ -64,5 +65,6 @@ print "phone parsing starting"
 db_twitter = client.tweets
 #data = []
 #db.phonestrain.drop()
+ids = db.bharat_phonestrain.distinct("_id")
 run()
 print "Done parsing..."
