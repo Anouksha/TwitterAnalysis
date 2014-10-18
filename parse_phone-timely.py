@@ -17,6 +17,7 @@ def start(tweet):
     p_no = ''
     data = []
     if a:
+        print tweet
         for i in a[0][0]:
             if i.isdigit():
                 p_no += i
@@ -50,7 +51,7 @@ def run():
         #    time.sleep(1)
         #t.start()
         if tweet['id_str'] not in ids:
-            print tweet
+            #print tweet
             start(tweet)
     #print "ok"
     #print datetime.datetime.now()
