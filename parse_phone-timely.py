@@ -3,6 +3,8 @@
 import re
 import datetime
 from pymongo import MongoClient
+import pymongo
+import json
 import time
 import threading
 
@@ -32,13 +34,16 @@ def start(tweet):
 
 
     #if len(data) == 10000:
-        insert2db(data)
+        try:
+            insert2db(data)
+        except pymongo.errors.DuplicateKeyError:
+            db.bharat_phonestrain.save(json.loads(data))
     #    print len(data), " tweets processed"
     #    data[:] = []
 
 
 def insert2db(data):
-    db.bharat_phonestrain.save(data)
+    db.bharat_phonestrain.insert(data)
 
 
 def run():
