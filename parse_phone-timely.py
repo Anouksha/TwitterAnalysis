@@ -38,7 +38,7 @@ def start(tweet):
 
 
 def insert2db(data):
-    db.bharat_phonestrain.insert(data)
+    db.bharat_phonestrain.save(data)
 
 
 def run():
