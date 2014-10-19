@@ -148,7 +148,7 @@ c=0
 for phone in phone_numbers:
 
     tweets = db_parsed.bharat_phonestrain.find({"phone_no":phone})
-    data = []
+    data = {}
     data['phone_no'] = str(phone)
     data['count'] = get_phone_count(tweets)
     data['num_representations'] = get_unique_representations(tweets)
