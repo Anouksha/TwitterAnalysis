@@ -8,7 +8,12 @@ import math
 
 db_parsed = pymongo.MongoClient().TwitterParsed
 #phone_numbers = db_parsed.bharat_phonestrain.distinct("phone_no")
-phone_numbers = db_parsed.bharat_phonestrain.aggregate([{"$group":{"_id":"$phone_no"}}])
+#phone_numbers = db_parsed.bharat_phonestrain.aggregate([{"$group":{"_id":"$phone_no"}}])
+phone_tweets = db_parsed.bharat_phonestrain.find()
+phone_numbers = []
+for t in phone_tweets:
+    if t['phone_no'] not in phone_numbers:
+        phone_numbers.append(t['phone_no'])
 #zeroPattern = re.compile('^0')
 
 
