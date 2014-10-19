@@ -7,7 +7,8 @@ import time
 import math
 
 db_parsed = pymongo.MongoClient().TwitterParsed
-phone_numbers = db_parsed.bharat_phonestrain.distinct("phone_no")
+#phone_numbers = db_parsed.bharat_phonestrain.distinct("phone_no")
+phone_numbers = db_parsed.bharat_phonestrain.aggregate([{"$group":{"_id":"$phone_no"}}])
 #zeroPattern = re.compile('^0')
 
 
