@@ -19,6 +19,7 @@ for num in numbers:
             p_no+=n
     if p_no not in phone_numbers:
         phone_numbers.append(p_no)
+        print p_no
 #zeroPattern = re.compile('^0')
 
 
@@ -46,7 +47,7 @@ def get_std_dev_text(number, mean):
     calc = 0.0
     n = 0.0
     #print "Mean: "+str(mean)
-    tweets = db_parsed.phonestrain.find({"phone_no":number})
+    tweets = db_parsed.bharat_phonestrain.find({"phone_no":number})
     for tweet in tweets:
         diff = (len(tweet['text'])-mean)*1.0
         calc += math.pow(diff,2)
@@ -72,19 +73,19 @@ def get_num_sources(tweets):
     return len(sources)
 
 def get_num_truncated(number):
-    count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"truncated":True}]}).count()
+    count = db_parsed.bharat_phonestrain.find({"$and":[{"phone_no":number},{"truncated":True}]}).count()
     return count
 
 def get_num_retweeted(number):
-    count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"retweeted":True}]}).count()
+    count = db_parsed.bharat_phonestrain.find({"$and":[{"phone_no":number},{"retweeted":True}]}).count()
     return count
 
 def get_num_verified(number):
-    count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"user.verified":True}]}).count()
+    count = db_parsed.bharat_phonestrain.find({"$and":[{"phone_no":number},{"user.verified":True}]}).count()
     return count
 
 def get_num_user_mentions(number):
-    tweets = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"entities.user_mentions":{"$not": {"$size": 0}}}]})
+    tweets = db_parsed.bharat_phonestrain.find({"$and":[{"phone_no":number},{"entities.user_mentions":{"$not": {"$size": 0}}}]})
     total_mentions = 0
     for tweet in tweets:
         mentions = tweet['entities']['user_mentions']
@@ -92,7 +93,7 @@ def get_num_user_mentions(number):
     return total_mentions
 
 def get_num_in_replies(number):
-    count = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"in_reply_to_screen_name":{"$ne": None}}]}).count()
+    count = db_parsed.bharat_phonestrain.find({"$and":[{"phone_no":number},{"in_reply_to_screen_name":{"$ne": None}}]}).count()
     return count
 
 def get_total_urls(tweets):
@@ -124,13 +125,13 @@ def get_num_jumped_timezones(number, tweets):
     accounts = tweets.distinct("user.screen_name")
     count = 0
     for account in accounts:
-        timezones = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"user.screen_name":account}]}).distinct("user.timezone")
+        timezones = db_parsed.bharat_phonestrain.find({"$and":[{"phone_no":number},{"user.screen_name":account}]}).distinct("user.timezone")
         if len(timezones)>1:
             count+=1
     return count
 
 def get_total_hashtags(number):
-    tweets = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"entities.hashtags":{"$not": {"$size": 0}}}]})
+    tweets = db_parsed.bharat_phonestrain.find({"$and":[{"phone_no":number},{"entities.hashtags":{"$not": {"$size": 0}}}]})
     total_hashtags = 0
     for tweet in tweets:
         hashtags = tweet['entities']['hashtags']
@@ -138,7 +139,7 @@ def get_total_hashtags(number):
     return total_hashtags
 
 def get_unique_hashtags(number):
-    tweets = db_parsed.phonestrain.find({"$and":[{"phone_no":number},{"entities.hashtags":{"$not": {"$size": 0}}}]})
+    tweets = db_parsed.bharat_phonestrain.find({"$and":[{"phone_no":number},{"entities.hashtags":{"$not": {"$size": 0}}}]})
     unique_hashtags = []
     for tweet in tweets:
         hashtags = tweet['entities']['hashtags']
