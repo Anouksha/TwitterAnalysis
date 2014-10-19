@@ -3,16 +3,16 @@ __author__ = 'anouksha'
 import pymongo
 import datetime
 
-db = pymongo.MongoClient().TwitterParsed
-tweets = db.bharat_phonestrain.find()
+db = pymongo.MongoClient().tweets
+tweets = db.bharat_phonetweets.find()
 
 print "Starting"
 
 for tweet in tweets:
     print tweet['created_at']
-    tweet['created_at'] = datetime.datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y')
-    print tweet
-    db.bharat_phonestrain.save(tweet)
+    date = datetime.datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y')
+    print date
+    db.bharat_phonestrain.update({"_id":tweet['id_str']},{"$set":{"created_at":date}})
     break
 
 print "Done"
