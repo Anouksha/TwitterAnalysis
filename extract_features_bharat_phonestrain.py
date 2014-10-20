@@ -170,8 +170,8 @@ for phone in phone_numbers:
     data['unique_hashtags'] = get_unique_hashtags(phone)
 
     print data
-    break
-    #insert_to_db(data)
+    #break
+    insert_to_db(data)
 
 print "Done with Feature Extraction"
 
