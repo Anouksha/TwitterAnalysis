@@ -148,7 +148,7 @@ c=0
 for phone in phone_numbers:
 
     c+=1
-    if c> 16311:
+    if c> 140154:
         tweets = db_parsed.bharat_phonestrain.find({"phone_no":phone})
         data = {}
         data['phone_no'] = str(phone)
