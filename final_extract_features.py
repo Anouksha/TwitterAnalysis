@@ -4,10 +4,10 @@ import pymongo
 import math
 
 db_parsed = pymongo.MongoClient().TwitterParsed
-#numbers_1 = db_parsed.phone_features.distinct('phone_no')
-#numbers_2 = db_parsed.bharat_phone_features.distinct('phone_no')
-#phone_numbers = numbers_1 | numbers_2
-phone_numbers = db_parsed.final_phonestrain.aggregate([{"$group":{"_id":"$phone_no"}}])
+numbers_1 = db_parsed.phone_features.distinct('phone_no')
+numbers_2 = db_parsed.bharat_phone_features.distinct('phone_no')
+phone_numbers = numbers_1 | numbers_2
+#phone_numbers = db_parsed.final_phonestrain.aggregate([{"$group":{"_id":"$phone_no"}}])
 
 def get_phone_count(tweets):
     return tweets.count()
