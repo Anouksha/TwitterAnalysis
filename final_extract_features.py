@@ -143,7 +143,7 @@ for phone in phone_numbers:
     #if zeroPattern.match(phone):
     #    continue
     c+=1
-    if(c>561605):
+    if(c>570178):
         tweets = db_parsed.final_phonestrain.find({"phone_no":phone})
         data = {}
         data['phone_no'] = str(phone)
